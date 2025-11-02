@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # You can name this whatever you like.
+  # This namespace should be where kube-state-metrics is running.
+  name: ksm-pipelinerun-config
+  namespace: openshift-monitoring
+data:
+  # The configuration is nested under this data key.
+  # The filename must match what your kube-state-metrics deployment expects.
+  config.yaml: |-
+    kind: CustomResourceStateMetrics
+    spec:
+      resources:
+      # --- Tekton PipelineRun configuration ---
+      - groupVersionKind:
+          group: tekton.dev
+          version: v1
+          kind: PipelineRun
+        # These labels are added to every metric for PipelineRuns
+        labelsFromPath:
+          name: ["metadata", "name"]
+          namespace: ["metadata", "namespace"]
+        metrics:
+          # This is the new metric we defined
+          - name: tekton_pipelines_controller_pipelinerun_status
+            help: "The status of all pipeline runs with option to pinpoint with namespace/name"
+            each:
+              type: StateSet
+              stateSet:
+                # The metric label will be 'status'
+                labelName: "status"
+                # The value for the 'status' label comes from this path
+                path: ["status", "conditions", "0", "reason"]
