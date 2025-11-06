@@ -1,7 +1,7 @@
 # kueue-metrics
 
 ## Purpose of this repo
-Currently, we have limited observability about [tekton-kueue](https://github.com/konflux-ci/tekton-kueue) `PipelineRuns` statuses and the reasons behind them. It will help us to understand better the reasons of the failures and investigate the reasons behind a pending `PipelineRun` and if we can do something about it. Those are the statuses and reasons of a `PipelineRun`:
+Currently, we have limited observability about [Tekton](https://tekton.dev/docs/) `PipelineRuns` statuses and the reasons behind them. It will help us to understand better the reasons of the failures and investigate the reasons behind a pending `PipelineRun` and if we can do something about it. Those are the statuses and reasons of a `PipelineRun`:
 ### Status: "Unknown"
 * Pending
 * Started
